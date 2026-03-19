@@ -23,6 +23,9 @@ app.UseAuthorization();
 
 
 app.MapGet("/playergames", () => gamesMap)
-    .RequireAuthorization(); //needed to add authentication and authorization to access this endpoint
+    .RequireAuthorization(policy =>
+    {
+        policy.RequireRole("Admin"); //Only users with the "Admin" role can access this endpoint
+    }); //needed to add authentication and authorization to access this endpoint
 
 app.Run();
