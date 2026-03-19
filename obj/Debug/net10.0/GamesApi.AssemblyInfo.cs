@@ -10,10 +10,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("7bb92888-5f3c-48c6-bc19-32ba8753feeb")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("GamesApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab34fad7e95a7b50ce879c33763f1c2ec2c323d4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd16157e1fe8496a656a902da5dfdec7fed59c4d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GamesApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GamesApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
