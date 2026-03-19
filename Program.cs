@@ -10,6 +10,13 @@ Dictionary<string, List<string>> gamesMap= new ()
     {"player3",  new List<string>() { "Minecraft", "Roblox" }}
 };
 
+
+Dictionary<string, List<string>> subscriptionMap= new ()
+{
+    {"silver",  new List<string>() { "Fortnite", "Apex Legends" }},
+    {"gold",  new List<string>() { "Call of Duty", "Battlefield" ,"Valorant", "Fortnite", "Apex Legends" }}
+};
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthentication().AddJwtBearer(); //needed to add authentication and authorization to access this endpoint
@@ -29,8 +36,20 @@ app.MapGet("/playergames", () => gamesMap)
         policy.RequireRole("Admin"); //Only users with the "Admin" role can access this endpoint
     }); //needed to add authentication and authorization to access this endpoint
 
+
+//Mygames Endpoint: This endpoint allows authenticated users with the "player" role to retrieve their own games. It checks the user's identity and returns the games associated with their username from the gamesMap dictionary. If the user is not authenticated or does not have the "player" role, they will receive an appropriate error response.
 app.MapGet("/mygames", (ClaimsPrincipal user) =>
 {
+
+    var hasClaim = user.HasClaim(claim => claim.Type == "subscription");
+
+    if (!hasClaim)
+    {
+        var subs = user.FindFirstValue("subscription") ?? throw new Exception("Subscription claim is missing.");
+        return Results.Ok(subscriptionMap[subs]); // Return the games based on the user's subscription claim
+    }
+
+     
     ArgumentNullException.ThrowIfNull(user.Identity?.Name, "User identity is null or does not contain a name claim.");
     var username = user.Identity?.Name; // Get the username from the claims
 
